@@ -11,18 +11,19 @@ Home.vue contains: cards component setup and style options.
     <b-card-group columns>
       <b-card v-for="recipe in filteredRecipes" :key="recipe.node.id"
         id="recipe_card"
-        v-on:click="clickRecipe(recipe.node.id)"
         :bgVariant="cardColor"
         :borderVariant="cardBorder"
         textVariant="primary"
       >
-        <b-card-title id="recipe_title">
-          {{ recipe.node.title }}
-        </b-card-title>
-        <b-card-sub-title>
-          <p>
-            Category/Description-Here
-          </p>
+      <b-container>
+        <b-row rows="1" v-on:click="clickRecipe(recipe.node.id)" >
+          <b-card-title id="recipe_title">
+            {{ recipe.node.title }}
+          </b-card-title>
+        </b-row>
+      </b-container>
+        <b-card-sub-title v-if="recipe.node.recipeCategory">
+          {{ recipe.node.recipeCategory.name }}
         </b-card-sub-title>
         <b-card-text align="right">
           <b-form-rating 
@@ -35,6 +36,7 @@ Home.vue contains: cards component setup and style options.
             no-border>
           </b-form-rating>
         </b-card-text>
+        <b-link v-if="recipe.node.webLink" :href="recipe.node.webLink" class=".card-link">Link</b-link>
       </b-card>
     </b-card-group>
   </b-container>
@@ -54,6 +56,7 @@ query {
           name
         }
         sourceType
+        webLink
         bookTitle
         rating
       }
