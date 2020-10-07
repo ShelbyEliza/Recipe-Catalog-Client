@@ -14,14 +14,15 @@ Home.vue contains: cards component setup and style options.
         :bgVariant="cardColor"
         :borderVariant="cardBorder"
         textVariant="primary"
+        :img-src="defaultCardImageByCategory(recipe)"
       >
-      <b-container>
-        <b-row rows="1" v-on:click="clickRecipe(recipe.node.id)" >
-          <b-card-title id="recipe_title">
-            {{ recipe.node.title }}
-          </b-card-title>
-        </b-row>
-      </b-container>
+        <b-container>
+          <b-row rows="1" v-on:click="clickRecipe(recipe.node.id)" >
+            <b-card-title id="recipe_title">
+              {{ recipe.node.title }}
+            </b-card-title>
+          </b-row>
+        </b-container>
         <b-card-sub-title v-if="recipe.node.recipeCategory">
           {{ recipe.node.recipeCategory.name }}
         </b-card-sub-title>
@@ -43,6 +44,7 @@ Home.vue contains: cards component setup and style options.
 </template>
 
 <script>
+import resolveImage from '../mixins/resolveImage'
 import gql from 'graphql-tag'
 export const GET_ALL_RECIPES = gql`
 query {
@@ -85,6 +87,7 @@ query categories {
 
 export default {
   name: 'Home',
+  mixins: [resolveImage],
   props: ['darkMode', 'category'],
   data () {
     return {
@@ -99,6 +102,14 @@ export default {
      */
     clickRecipe: function (recipeId) {
       this.$router.push({ name: 'Recipe', params: { recipeId: recipeId } })
+    }, 
+    /** 
+     * if category and name exist for recipe, create a url for the category-appropriate default image.
+    */
+    defaultCardImageByCategory: function (recipe) {
+      if (recipe.node.recipeCategory && recipe.node.recipeCategory.name in this.defaultCardImages) {
+        return this.resolveImageUrl(this.defaultCardImages[recipe.node.recipeCategory.name])
+      }
     }
   },
   apollo: {

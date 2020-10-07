@@ -1,4 +1,19 @@
 export default {
+  data () {
+    return {
+      defaultCardImages: {
+        Breakfast: "defaultCardImageBreakfast.png",
+        Bread: "defaultCardImageBread.png",
+        /** 
+        defaultCardImageSoup: "",      
+        defaultCardImageSweets: "",
+        defaultCardImageMain: "",
+        defaultCardImageSide: "",
+        defaultCardImageDip: "", 
+        */
+      }
+    }
+  },
   methods: {
     /**
      * Get image url from image filename.

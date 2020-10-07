@@ -83,6 +83,7 @@ NewRecipe.vue adds a new recipe.
             id="link-input"
             v-model="form.web.link"
             required
+            :state="validateRecipeWebLink"
           ></b-form-input>
         </b-col>
       </b-form-row>
@@ -599,6 +600,20 @@ export default {
         return categories
       }
       return []
+    },
+    /**
+     * validate recipe link
+     */
+    validateRecipeWebLink: function () {
+      // eslint-disable-next-line no-useless-escape
+      var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+      var regex = new RegExp(expression);
+
+      if (this.form.web.link.match(regex)) {
+        return true; 
+      } else {
+        return false;
+      }
     }
   },
   watch: {
