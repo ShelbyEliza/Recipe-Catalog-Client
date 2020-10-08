@@ -50,7 +50,12 @@ Recipe.vue allows you to view and edit established recipe.
     <p class="mb-5" v-html="recipe.notes" id="notesDescription"></p>
 <!-- Pictures -->
     <p v-for="image in recipe.images.edges" :key="image.node.id">
-      <b-img :src="resolveImageUrl(image.node.filename)" fluid alt="Responsive image"></b-img>
+      <b-img 
+        id="photoFormat"
+        :src="resolveImageUrl(image.node.filename)" 
+        fluid alt="Responsive image" 
+      >
+      </b-img>
     </p>
   </b-container>
 </template>
@@ -138,5 +143,9 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 4px;
+}
+#photoFormat {
+  width: 50%;
+  height: 70%;
 }
 </style>

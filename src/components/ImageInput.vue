@@ -3,19 +3,20 @@
     <div v-if="existingPictures">
     <b-form-row class="mb-1" v-for="image in existingPictures" :key="image.node.id">
       <b-col cols="2">
-        <label>Existing Picture</label>
+        <label>Existing Picture:</label>
       </b-col>
-      <b-col>
-        <b-img thumbnail :src="resolveImageUrlWidth(image.node.filename, 300, 300)" fluid></b-img>
+      <b-col id="thumbnailImageColumn">
+        <b-img id="thumbnailImage" thumbnail :src="resolveImageUrlWidth(image.node.filename, 300, 300)" fluid></b-img>
       </b-col>
       <b-col>
         <b-button @click="removeExistingImage(image.node.id)">-</b-button>
       </b-col>
     </b-form-row>
     </div>
+<!-- Add new picture begins -->
     <b-form-row class="mb-1" v-for="picture in formPictures" v-bind:key="picture.id">
       <b-col cols="2">
-        <label>Picture {{picture.id}}:</label>
+        <label>Picture:</label>
       </b-col>
       <b-col>
         <b-form-file 
@@ -183,5 +184,12 @@ export default {
 </script>
 
 <style scoped>
+
+  #thumbnailImage {
+    background: rgb(37, 37, 37);
+    border-color: black;
+    width: 150px;
+    height: 150px;
+  }
 
 </style>

@@ -16,16 +16,19 @@ Home.vue contains: cards component setup and style options.
         textVariant="primary"
         :img-src="defaultCardImageByCategory(recipe)"
       >
+<!-- title begins-->
         <b-container>
-          <b-row rows="1" v-on:click="clickRecipe(recipe.node.id)" >
+          <b-row rows="1" id="recipe_card_title" v-on:click="clickRecipe(recipe.node.id)">
             <b-card-title id="recipe_title">
               {{ recipe.node.title }}
             </b-card-title>
           </b-row>
         </b-container>
+<!-- sub-title begins-->
         <b-card-sub-title v-if="recipe.node.recipeCategory">
           {{ recipe.node.recipeCategory.name }}
         </b-card-sub-title>
+<!-- text begins (rating)-->
         <b-card-text align="right">
           <b-form-rating 
             id="ratingId" 
@@ -37,7 +40,8 @@ Home.vue contains: cards component setup and style options.
             no-border>
           </b-form-rating>
         </b-card-text>
-        <b-link v-if="recipe.node.webLink" :href="recipe.node.webLink" class=".card-link">Link</b-link>
+<!-- web-link if available begins-->
+        <b-link v-if="recipe.node.webLink" :href="recipe.node.webLink" class=".card-link">Recipe Website</b-link>    
       </b-card>
     </b-card-group>
   </b-container>
@@ -163,8 +167,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   #recipe_card {
-    cursor: pointer;
     max-width: 20rem;
+  }
+  #recipe_card_title {
+    cursor: pointer;
   }
   #body {
     margin-top: 35px;
