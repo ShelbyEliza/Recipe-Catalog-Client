@@ -1,17 +1,24 @@
 <template>
   <div>
     <div v-if="existingPictures">
-    <b-form-row class="mb-1" v-for="image in existingPictures" :key="image.node.id">
-      <b-col cols="2">
-        <label>Existing Picture:</label>
-      </b-col>
-      <b-col id="thumbnailImageColumn">
-        <b-img id="thumbnailImage" thumbnail :src="resolveImageUrlWidth(image.node.filename, 300, 300)" fluid></b-img>
-      </b-col>
-      <b-col>
-        <b-button @click="removeExistingImage(image.node.id)">-</b-button>
-      </b-col>
-    </b-form-row>
+      <b-form-row class="mb-1">
+        <b-col cols="2">
+          <label>Existing Picture:</label>
+        </b-col>
+        <div id="existingPictureGridContainer">
+          <div v-for="image in existingPictures" :key="image.node.id">
+            <!-- sets dark or light class to image background, one light div, one dark div -->
+            <div v-if="darkMode">
+              <b-img class="dark" thumbnail :src="resolveImageUrlWidth(image.node.filename, 300, 300)" fluid></b-img>
+              <b-button @click="removeExistingImage(image.node.id)">-</b-button>
+            </div>
+            <div v-if="!darkMode">
+              <b-img class="light" thumbnail :src="resolveImageUrlWidth(image.node.filename, 300, 300)" fluid></b-img>
+              <b-button @click="removeExistingImage(image.node.id)">-</b-button>
+            </div>
+          </div>
+        </div>
+      </b-form-row>
     </div>
 <!-- Add new picture begins -->
     <b-form-row class="mb-1" v-for="picture in formPictures" v-bind:key="picture.id">
@@ -65,7 +72,7 @@ export default {
      return {
      }
   },
-  props: ['formPictures', 'existingPictures', 'recipeId'],
+  props: ['formPictures', 'existingPictures', 'recipeId', 'darkMode'],
   methods: {
     /**
      * Add a new blank picture entry to formPictures.
@@ -183,13 +190,22 @@ export default {
 }
 </script>
 
-<style scoped>
-
-  #thumbnailImage {
-    background: rgb(37, 37, 37);
-    border-color: black;
+<style scoped lang="scss">
+  .dark {
+    $darkBackground: rgb(37, 37, 37);
+    background-color: $darkBackground;
+  }
+  .light {
+    $lightBackground: rgb(139, 129, 155);
+    background-color: $lightBackground;
+  }
+  .img-thumbnail {
     width: 150px;
     height: 150px;
+  }
+  #existingPictureGridContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
   }
 
 </style>
